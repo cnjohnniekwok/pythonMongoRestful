@@ -65,12 +65,26 @@ Below are example JSON inputs for testing the API and UI, Paste these into the U
 - Copy and Past the following JSON into the input field:
 
 ```json
-{
+[
+  {
   "address": "123 Maple St",
   "rooms": 3,
   "price": 250000,
   "condition": "good"
-}
+  },
+  {
+    "address": "456 Oak Ave",
+    "rooms": 4,
+    "price": 320000,
+    "condition": "good"
+  },
+  {
+    "address": "789 Plam Rd",
+    "rooms": 4,
+    "price": 270000,
+    "condition": "poor"
+  }
+]
 ```
 - Click `Create` 
 
@@ -148,11 +162,11 @@ Response Example: `{"message": "Item deleted"}`
 
 ### Bulk Update (`PUT /items/bulk-update`)
 Update all entry with a specific query condition.
-The JSON below is to find all entries with 3 rooms, and update their price and condition.
+The JSON below is to find all entries with 4 rooms, and update their price and condition.
 1. Copy and Past the following JSON into the input field:
 ```json
 {
-  "query": {"rooms": 3},
+  "query": {"rooms": 4},
   "update": {"price": 270000, "condition": "updated"}
 }
 ```
@@ -167,7 +181,7 @@ This JSON is to find all entries that condtion is good, and delete them.
 1. Copy and Past the following JSON into the input field:
 ```json
 {
-  "query": {"condition": "good"}
+  "query": {"condition": "updated"}
 }
 ```
 2. Click `Bulk Delete`
@@ -225,3 +239,8 @@ Example output:
 2. Click `Query` to query the entry:
 3. Click `Show Table` to see the respone table
 4. Click on the row to see the image in another window.
+
+### Try it yourself
+
+Now try to create an entry using `house02.jpg` in `demo_images/`
+Have fun!

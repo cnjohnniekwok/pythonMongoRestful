@@ -8,7 +8,7 @@ import io
 import base64
 
 # API base URL
-API_URL = "http://localhost:5000/items"
+API_URL = "http://localhost:5000/properties"
 
 # Main window
 root = tk.Tk()
@@ -105,7 +105,7 @@ def show_response_table():
                 table["columns"] = ("Message",)
                 table.heading("Message", text="Message")
                 table.column("Message", width=200, anchor="center")
-                table.insert("", "end", values=("No items found",))
+                table.insert("", "end", values=("No properties found",))
             else:
                 keys = list(data[0].keys())
                 table["columns"] = keys
@@ -172,7 +172,7 @@ def create_item():
     except requests.RequestException as e:
         messagebox.showerror("Error", f"Network error: {str(e)}")
 
-def read_items():
+def read_properties():
     global latest_response
     try:
         response = requests.get(API_URL)
@@ -185,7 +185,7 @@ def read_items():
     except requests.RequestException as e:
         messagebox.showerror("Error", f"Network error: {str(e)}")
 
-def query_items():
+def query_properties():
     global latest_response
     try:
         data = json.loads(json_input.get("1.0", tk.END).strip())
@@ -195,7 +195,7 @@ def query_items():
         response_output.insert(tk.END, json.dumps(response.json(), indent=2))
         curl_output.insert(tk.END, generate_curl("GET", f"{API_URL}/query", data))
         if response.status_code == 200:
-            messagebox.showinfo("Success", f"Found {len(response.json())} items")
+            messagebox.showinfo("Success", f"Found {len(response.json())} properties")
         else:
             messagebox.showerror("Error", f"Failed: {response.status_code} - {response.text}")
     except json.JSONDecodeError:
@@ -225,7 +225,7 @@ def update_item():
     except requests.RequestException as e:
         messagebox.showerror("Error", f"Network error: {str(e)}")
 
-def bulk_update_items():
+def bulk_update_properties():
     global latest_response
     try:
         data = json.loads(json_input.get("1.0", tk.END).strip())
@@ -238,7 +238,7 @@ def bulk_update_items():
         response_output.insert(tk.END, json.dumps(response.json(), indent=2))
         curl_output.insert(tk.END, generate_curl("PUT", f"{API_URL}/bulk-update", data))
         if response.status_code == 200:
-            messagebox.showinfo("Success", f"Bulk update completed: {response.json()['modified_count']} items modified")
+            messagebox.showinfo("Success", f"Bulk update completed: {response.json()['modified_count']} properties modified")
         else:
             messagebox.showerror("Error", f"Failed: {response.status_code} - {response.text}")
     except json.JSONDecodeError:
@@ -268,7 +268,7 @@ def delete_item():
     except requests.RequestException as e:
         messagebox.showerror("Error", f"Network error: {str(e)}")
 
-def bulk_delete_items():
+def bulk_delete_properties():
     global latest_response
     try:
         data = json.loads(json_input.get("1.0", tk.END).strip())
@@ -281,7 +281,7 @@ def bulk_delete_items():
         response_output.insert(tk.END, json.dumps(response.json(), indent=2))
         curl_output.insert(tk.END, generate_curl("DELETE", f"{API_URL}/bulk-delete", data))
         if response.status_code == 200:
-            messagebox.showinfo("Success", f"Bulk delete completed: {response.json()['deleted_count']} items deleted")
+            messagebox.showinfo("Success", f"Bulk delete completed: {response.json()['deleted_count']} properties deleted")
         else:
             messagebox.showerror("Error", f"Failed: {response.status_code} - {response.text}")
     except json.JSONDecodeError:
@@ -301,15 +301,15 @@ table_style = {"font": ("Arial", 10, "bold"), "width": 12, "height": 2, "relief"
 
 # First row of buttons (Create, Read All, Query, Show Table)
 tk.Button(button_frame, text="Create", command=create_item, **default_style).grid(row=0, column=0, padx=5, pady=5)
-tk.Button(button_frame, text="Read All", command=read_items, **default_style).grid(row=0, column=1, padx=5, pady=5)
-tk.Button(button_frame, text="Query", command=query_items, **default_style).grid(row=0, column=2, padx=5, pady=5)
+tk.Button(button_frame, text="Read All", command=read_properties, **default_style).grid(row=0, column=1, padx=5, pady=5)
+tk.Button(button_frame, text="Query", command=query_properties, **default_style).grid(row=0, column=2, padx=5, pady=5)
 tk.Button(button_frame, text="Show Table", command=show_response_table, **table_style).grid(row=0, column=3, padx=5, pady=5)
 
 # Second row of buttons (Update, Delete, Bulk Update, Bulk Delete)
 tk.Button(button_frame, text="Update", command=update_item, **update_style).grid(row=1, column=0, padx=5, pady=5)
 tk.Button(button_frame, text="Delete", command=delete_item, **delete_style).grid(row=1, column=1, padx=5, pady=5)
-tk.Button(button_frame, text="Bulk Update", command=bulk_update_items, **update_style).grid(row=1, column=2, padx=5, pady=5)
-tk.Button(button_frame, text="Bulk Delete", command=bulk_delete_items, **delete_style).grid(row=1, column=3, padx=5, pady=5)
+tk.Button(button_frame, text="Bulk Update", command=bulk_update_properties, **update_style).grid(row=1, column=2, padx=5, pady=5)
+tk.Button(button_frame, text="Bulk Delete", command=bulk_delete_properties, **delete_style).grid(row=1, column=3, padx=5, pady=5)
 
 # Start the application
 root.mainloop()

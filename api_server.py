@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from bson import ObjectId
-import json
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -9,61 +8,62 @@ app = Flask(__name__)
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
 db = client['mydb']  # Database name
-collection = db['items']  # Collection name
+collection = db['properties']  # Collection name
 
-# Helper function to convert ObjectId to string
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
-
-# CREATE - Add new item
-@app.route('/items', methods=['POST'])
+# CREATE - Add new item (updated to support bulk)
+@app.route('/properties', methods=['POST'])
 def create_item():
     try:
         data = request.get_json()
         if not data:
             return jsonify({'error': 'No data provided'}), 400
         
-        result = collection.insert_one(data)
-        return jsonify({'id': str(result.inserted_id)}), 201
+        if isinstance(data, list):  # Handle bulk create
+            result = collection.insert_many(data)
+            return jsonify({'ids': [str(id) for id in result.inserted_ids]}), 201
+        else:  # Single create
+            result = collection.insert_one(data)
+            return jsonify({'id': str(result.inserted_id)}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# READ - Get all items
-@app.route('/items', methods=['GET'])
-def get_items():
+# READ - Get all properties
+@app.route('/properties', methods=['GET'])
+def get_properties():
     try:
-        items = list(collection.find())
-        return JSONEncoder().encode(items), 200
+        properties = list(collection.find())
+        for item in properties:
+            item['_id'] = str(item['_id'])  # Convert ObjectId to string
+        return jsonify(properties), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 # READ - Get single item
-@app.route('/items/<id>', methods=['GET'])
+@app.route('/properties/<id>', methods=['GET'])
 def get_item(id):
     try:
         item = collection.find_one({'_id': ObjectId(id)})
         if item:
-            return JSONEncoder().encode(item), 200
+            item['_id'] = str(item['_id'])
+            return jsonify(item), 200
         return jsonify({'error': 'Item not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# READ - Get items by query
-@app.route('/items/query', methods=['GET'])
-def get_items_by_query():
+# READ - Get properties by query
+@app.route('/properties/query', methods=['GET'])
+def get_properties_by_query():
     try:
-        # Get query from JSON body (optional, can be empty)
         query = request.get_json() or {}
-        items = list(collection.find(query))
-        return JSONEncoder().encode(items), 200
+        properties = list(collection.find(query))
+        for item in properties:
+            item['_id'] = str(item['_id'])
+        return jsonify(properties), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 # UPDATE - Update item
-@app.route('/items/<id>', methods=['PUT'])
+@app.route('/properties/<id>', methods=['PUT'])
 def update_item(id):
     try:
         data = request.get_json()
@@ -81,9 +81,9 @@ def update_item(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# UPDATE - Update multiple items by query
-@app.route('/items/bulk-update', methods=['PUT'])
-def bulk_update_items():
+# UPDATE - Update multiple properties by query
+@app.route('/properties/bulk-update', methods=['PUT'])
+def bulk_update_properties():
     try:
         data = request.get_json()
         if not data or 'query' not in data or 'update' not in data:
@@ -102,7 +102,7 @@ def bulk_update_items():
         return jsonify({'error': str(e)}), 500
 
 # DELETE - Delete item
-@app.route('/items/<id>', methods=['DELETE'])
+@app.route('/properties/<id>', methods=['DELETE'])
 def delete_item(id):
     try:
         result = collection.delete_one({'_id': ObjectId(id)})
@@ -112,9 +112,9 @@ def delete_item(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# DELETE - Delete multiple items by query
-@app.route('/items/bulk-delete', methods=['DELETE'])
-def bulk_delete_items():
+# DELETE - Delete multiple properties by query
+@app.route('/properties/bulk-delete', methods=['DELETE'])
+def bulk_delete_properties():
     try:
         data = request.get_json()
         if not data or 'query' not in data:
