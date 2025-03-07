@@ -19,6 +19,14 @@ pip upgrade
 pip install flask pymongo requests
 ```
 
+### Install Git
+1. follow the steps to install Git depends on your OS: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+2. Test if git has installed properly:
+```shell
+git --version
+> git version 2.45.1
+```
+
 ## Start MongoDB
 1. change directory into mongod executable file location
 ```shell
@@ -31,7 +39,7 @@ mongod.exe --dbpath "C:\data\db"
 ## Start API Server
 1. Clone this repository into your machine
 ```shell
-git clone 
+git clone git@github.com:cnjohnniekwok/pythonMongoRestful.git
 ```
 2. Run python command to start the server:
 ```shell
@@ -42,7 +50,7 @@ The API server will run on http://localhost:5000, Keep this terminal open.
 ## Start the Client UI
 1. If you haven't done so in the previos step, clone this repository into your machine
 ```shell
-git clone 
+git clone git@github.com:cnjohnniekwok/pythonMongoRestful.git
 ```
 2. Run python command to launch the UI:
 ```shell
