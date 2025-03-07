@@ -2,6 +2,10 @@
 
 This project consists of a Flask-based RESTful API server connected to MongoDB and a Tkinter-based GUI client for performing CRUD (Create, Read, Update, Delete) operations on a housing survey dataset. The API supports single and bulk operations, and the UI provides an intuitive interface to interact with the data.
 
+![alt text](docs/ui_image.png)
+
+The purpose is to gives you a feeling of how api works and the basic api oriented database operations.
+
 ## Installation Steps
 ### Install MongoDB
 1. Download and Install MongoDB [https://www.mongodb.com/try/download/community]
@@ -244,3 +248,25 @@ Example output:
 
 Now try to create an entry using `house02.jpg` in `demo_images/`
 Have fun!
+
+### Further Reading:
+
+## JSON:
+- (JavaScript Object Notation) A lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate.
+https://www.w3schools.com/whatis/whatis_json.asp
+
+## MongoDB Compass:
+- A GUI tool for MongoDB that allows users to visually explore, analyze, and manage their database without using command-line queries.
+https://www.mongodb.com/products/tools/compass
+
+## PyMongo 
+-  A Python driver for MongoDB that enables applications to interact with MongoDB databases programmatically.
+https://pypi.org/project/pymongo/
+
+## Postman:
+- An API development platform that simplifies building, testing, and documenting APIs through an intuitive user interface.
+https://www.postman.com/learn/
+
+## Curl:
+- A command-line tool for transferring data using various network protocols, commonly used for testing APIs and downloading files.
+https://curl.se/
