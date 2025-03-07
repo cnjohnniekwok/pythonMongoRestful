@@ -249,6 +249,112 @@ Example output:
 Now try to create an entry using `house02.jpg` in `demo_images/`
 Have fun!
 
+### Nested Json Data
+Below Json query data with the address `23 Good will ave`, updating it with new `gardens` data.
+
+1. Copy and Paste the following JSON into the input field.
+```
+{
+  "query": {
+    "address": "23 Good will ave"
+  },
+  "update": {
+    "gardens": [
+      {
+        "location": "front",
+        "size": "11sqft"
+      },
+      {
+        "location": "rear",
+        "size": "30sqft"
+      }
+    ]
+  }
+}
+```
+2. Click `Bulk Update` to query the entry:
+3. Click `Show Table` to see the respone table
+4. Click on the row to see the image in another window, this time, there will be another window pops up with the garden data.
+
+### Try it yourself
+
+You can reference `show_gardens_popup()` in the `handle_row_click()` function from `./api_clicent.py` and try to create a new `show_rooms_popup()` that will show detailed room data.
+
+`Bulk Update` the property `23 Good will ave` with the below JSON data, and check your result:
+```
+{
+  "query": {
+    "address": "23 Good will ave"
+  },
+  "update": {
+    "room_data": [
+      {
+        "name": "Office",
+        "location": "first floor",
+        "length": "4.2m",
+        "width": "3m",
+        "room number": 1
+      },
+      {
+        "name": "Bathroom",
+        "location": "first floor",
+        "length": "3.1m",
+        "width": "3m",
+        "room number": 2
+      },
+      {
+        "name": "Master Bedroom",
+        "location": "first floor",
+        "length": "5.3m",
+        "width": "5m",
+        "room number": 3
+      },
+      {
+        "name": "Child Bedroom",
+        "location": "first floor",
+        "length": "4.2m",
+        "width": "4m",
+        "room number": 4
+      },
+      {
+        "name": "Child Bedroom",
+        "location": "first floor",
+        "length": "4.2m",
+        "width": "4m",
+        "room number": 5
+      },
+      {
+        "name": "Guest Bedroom 1",
+        "location": "Ground floor",
+        "length": "4m",
+        "width": "3.3m",
+        "room number": 6
+      },
+      {
+        "name": "Guest Bedroom 2",
+        "location": "Ground floor",
+        "length": "4m",
+        "width": "3.3m",
+        "room number": 7
+      },
+      {
+        "name": "Study Room",
+        "location": "Ground floor",
+        "length": "5m",
+        "width": "3.1m",
+        "room number": 8
+      }
+    ]
+  }
+}
+```
+
+When you click on the `23 Good will ave` row in the response table, you should see a new pop up window showing the correct room data: 
+
+![alt text](docs/room_data.png) 
+
+Have fun!
+
 ### Further Reading:
 
 ## JSON:
