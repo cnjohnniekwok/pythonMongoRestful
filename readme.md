@@ -181,7 +181,7 @@ The JSON below is to find all entries with 4 rooms, and update their price and c
 
 ### Bulk Delete (`DELETE /items/bulk-delete`)
 Delete all entry matching a query.
-This JSON is to find all entries that condtion is good, and delete them.
+This JSON is to find all entries that condtion equal to `updated`, and delete them.
 1. Copy and Past the following JSON into the input field:
 ```json
 {
