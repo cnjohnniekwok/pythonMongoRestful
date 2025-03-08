@@ -273,7 +273,7 @@ Below Json query data with the address `23 Good will ave`, updating it with new 
 }
 ```
 2. Click `Bulk Update` to query the entry:
-3. Click `Show Table` to see the respone table
+3. Click `Read All` then `Show Table` to see the respone table.
 4. Click on the row to see the image in another window, this time, there will be another window pops up with the garden data.
 
 ### Try it yourself
@@ -354,6 +354,9 @@ When you click on the `23 Good will ave` row in the response table, you should s
 ![alt text](docs/room_data.png) 
 
 Have fun!
+
+> [!NOTE] 
+> Incase you got stuck at this one, you can check the answer at `/docs/try_yourself_ans/show_room_popup.py`.
 
 ### Further Reading:
 
